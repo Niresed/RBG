@@ -1,0 +1,4 @@
+name: NGB
+version: '${project.version}'
+main: me.niresed.ngb.NGB
+api-version: 1.16
