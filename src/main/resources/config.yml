@@ -1,0 +1,5 @@
+zone:
+  - 0 # from X
+  - 0 # from Z
+  - 100 # to X
+  - 100 # to Z
