@@ -1,6 +1,6 @@
 name: NGB
 version: '${project.version}'
-main: me.niresed.ngb.NGB
+main: me.niresed.ngb.Main.NGB
 api-version: 1.16
 commands:
   NGBOn:

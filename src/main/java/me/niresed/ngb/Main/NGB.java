@@ -1,4 +1,4 @@
-package me.niresed.ngb;
+package me.niresed.ngb.Main;
 
 import me.niresed.ngb.Commands.NGBOff;
 import me.niresed.ngb.Commands.NGBOn;

@@ -1,12 +1,10 @@
 package me.niresed.ngb.Commands;
 
-import me.niresed.ngb.NGB;
 import me.niresed.ngb.Utils.NGBUtils;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.jetbrains.annotations.NotNull;
 
 public class NGBOn implements CommandExecutor {
