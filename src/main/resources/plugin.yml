@@ -2,3 +2,8 @@ name: NGB
 version: '${project.version}'
 main: me.niresed.ngb.NGB
 api-version: 1.16
+commands:
+  NGBOn:
+    description: it is ngbon
+  NGBOff:
+    description: it is ngboff
