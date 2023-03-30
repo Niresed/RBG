@@ -22,8 +22,7 @@ public final class NGB extends JavaPlugin implements Listener {
     public static void ss(PlayerJoinEvent e){
 
     }
-//
-//
+
 //    public static void generatedBlock(boolean onOrOff, Player player){
 //        Thread.sleep();
 //        Location location = generatedLocation(player);
