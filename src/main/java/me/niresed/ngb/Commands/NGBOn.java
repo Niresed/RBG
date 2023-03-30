@@ -10,15 +10,6 @@ import org.jetbrains.annotations.NotNull;
 public class NGBOn implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player){
-            Player player = (Player) sender;
-            NGBUtils.duration = true;
-            try {
-                NGBUtils.repeat(player);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return false;
+        return true;
     }
 }
