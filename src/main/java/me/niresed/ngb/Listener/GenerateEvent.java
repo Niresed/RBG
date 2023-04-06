@@ -1,12 +1,14 @@
 package me.niresed.ngb.Listener;
 
 import me.niresed.ngb.Events.NGBEvent;
+import me.niresed.ngb.Utils.NGBUtils;
+import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 public class GenerateEvent implements Listener {
     @EventHandler
     public static void GenerateBlock(NGBEvent event){
-        System.out.println("Hello");
+        Location location = NGBUtils.generateLocation(event.getPlayer());
     }
 }
