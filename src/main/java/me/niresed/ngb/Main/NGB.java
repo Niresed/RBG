@@ -16,6 +16,9 @@ public final class NGB extends JavaPlugin implements Listener {
         getConfig().options().copyDefaults();
         saveDefaultConfig();
         getServer().getPluginManager().registerEvents(new GenerateEvent(), this);
+        timer();
+    }
+    public void timer(){
         BukkitScheduler scheduler = getServer().getScheduler();
         NGBEvent event = new NGBEvent(this);
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
@@ -23,9 +26,8 @@ public final class NGB extends JavaPlugin implements Listener {
             public void run() {
                 Bukkit.getServer().getPluginManager().callEvent(event);
             }
-        }, 0L, 20L);
+        }, 0L, 200L);
     }
-
     @Override
     public void onDisable() {
     }

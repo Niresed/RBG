@@ -13,8 +13,9 @@ public class GenerateEvent implements Listener {
     @EventHandler
     public static void GenerateBlock(NGBEvent event){
         Location location = NGBUtils.generateLocation();
-        Block block = location.getBlock();
-        block.setType(Material.SUGAR_CANE);
-        Bukkit.getLogger().info("Block");
+        System.out.println(location);
+//        Block block = location.getBlock();
+//        block.setType(Material.SUGAR_CANE);
+//        Bukkit.getLogger().info("Block");
     }
 }
