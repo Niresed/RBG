@@ -72,7 +72,7 @@ public class NGBUtils extends JavaPlugin implements Listener {
         Block below = location.getWorld().getBlockAt(x, y - 1, z);
         Block above = location.getWorld().getBlockAt(x, y + 1, z);
         Block above2x = location.getWorld().getBlockAt(x, y + 2, z);
-        return !(trueBlocks.contains(below.getType()) || (block.getType().isSolid()) || (above.getType().isSolid()));
+        return !(!(trueBlocks.contains(below.getType())) || (block.getType().isSolid()) || (above.getType().isSolid()));
     }
 
     private static boolean placeSugarCane(Block block) {
