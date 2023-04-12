@@ -23,14 +23,14 @@ public class NGBUtils extends JavaPlugin implements Listener {
     private static final Plugin plugin = NGB.getPlugin(NGB.class);
     // coordinate, in config.yml
     private static final ArrayList<Integer> coordinate = (ArrayList<Integer>) plugin.getConfig().getIntegerList("zone");
-    // trueBlocks, blocks on which you can spawn reeds
+    // trueBlocks, blocks on which can spawn reeds
     private static final HashSet<Material> trueBlocks = new HashSet<>();
 
     private static Location location;
 
     static {
         trueBlocks.add(Material.SAND);
-        trueBlocks.add(Material.GRASS);
+        trueBlocks.add(Material.GRASS_BLOCK);
         trueBlocks.add(Material.DIRT);
     }
 
@@ -72,6 +72,10 @@ public class NGBUtils extends JavaPlugin implements Listener {
         Block below = location.getWorld().getBlockAt(x, y - 1, z);
         Block above = location.getWorld().getBlockAt(x, y + 1, z);
         Block above2x = location.getWorld().getBlockAt(x, y + 2, z);
+        System.out.println(below.getType());
+        System.out.println("true blocks - " + !(trueBlocks.contains(below.getType())));
+        System.out.println("is solid - " + ((block.getType().isSolid()) || (above.getType().isSolid())));
+        System.out.println("all - " + !(!(trueBlocks.contains(below.getType())) || (block.getType().isSolid()) || (above.getType().isSolid())));
         return !(!(trueBlocks.contains(below.getType())) || (block.getType().isSolid()) || (above.getType().isSolid()));
     }
 
@@ -88,6 +92,7 @@ public class NGBUtils extends JavaPlugin implements Listener {
         };
         for (Block block1 : blocks){
             if (block1.getType() == Material.WATER){
+                System.out.println("Ура");
                 return true;
             }
         }
