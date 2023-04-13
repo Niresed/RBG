@@ -12,13 +12,10 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Random;
 
 public class NGBUtils extends JavaPlugin implements Listener {
-    private final Random random = new Random();
-
     // plugin
     private static final Plugin plugin = NGB.getPlugin(NGB.class);
     // coordinate, in config.yml
@@ -47,11 +44,10 @@ public class NGBUtils extends JavaPlugin implements Listener {
                 return location;
             }
         }
-        return location;
+        return location1;
     }
 
     private static Location generateRandomLocation(World world){
-        Random random = new Random();
         int minX = coordinate.get(0), minZ = coordinate.get(1);
         int maxX = coordinate.get(2), maxZ = coordinate.get(3);
         int x = (int) Math.floor(Math.random() * (maxX - minX + 1) + minX);
