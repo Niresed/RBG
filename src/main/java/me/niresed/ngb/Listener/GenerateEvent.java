@@ -3,6 +3,7 @@ package me.niresed.ngb.Listener;
 import me.niresed.ngb.Events.NGBEvent;
 import me.niresed.ngb.Utils.NGBUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -13,7 +14,9 @@ public class GenerateEvent implements Listener {
     @EventHandler
     public static void GenerateBlock(NGBEvent event){
         Location location = NGBUtils.generateLocation();
-        Block block = location.getBlock();
-        block.setType(Material.SUGAR_CANE);
+        if(location.getY() != 0){
+            Block block = location.getBlock();
+            block.setType(Material.SUGAR_CANE);
+        }
     }
 }

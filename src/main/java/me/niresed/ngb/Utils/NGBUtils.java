@@ -36,16 +36,15 @@ public class NGBUtils extends JavaPlugin implements Listener {
 
     public static Location generateLocation(){
         World world = Bukkit.getWorld("world");
+        Location location1 = new Location(world, 0, 0, 0);
         Location location = generateRandomLocation(world);
-        while (true){
+        for (int i = 0; i < 30; i++){
             boolean isLocationSafeCheck = isLocationSafe(location);
             boolean isLocationHasWaterInNearby = placeSugarCane(location.getWorld().getBlockAt((int) location.getX(), (int) location.getY() - 1, (int) location.getZ()));
-            Bukkit.getLogger().info("" + isLocationSafeCheck + "" + isLocationHasWaterInNearby);
             if (!(isLocationSafeCheck) || !(isLocationHasWaterInNearby)){
-                Bukkit.getLogger().info("ГГ");
                 location = generateRandomLocation(world);
             } else{
-                break;
+                return location;
             }
         }
         return location;
@@ -61,7 +60,7 @@ public class NGBUtils extends JavaPlugin implements Listener {
         Location location = new Location(world, x, y, z);
         y = location.getWorld().getHighestBlockYAt(location) + 1;
         location.setY(y);
-        Bukkit.getLogger().info(String.format("x = %d, y = %d, z = %d%n", x, y, z));
+
         return location;
     }
     private static boolean isLocationSafe(Location location) {
@@ -72,10 +71,6 @@ public class NGBUtils extends JavaPlugin implements Listener {
         Block below = location.getWorld().getBlockAt(x, y - 1, z);
         Block above = location.getWorld().getBlockAt(x, y + 1, z);
         Block above2x = location.getWorld().getBlockAt(x, y + 2, z);
-        System.out.println(below.getType());
-        System.out.println("true blocks - " + !(trueBlocks.contains(below.getType())));
-        System.out.println("is solid - " + ((block.getType().isSolid()) || (above.getType().isSolid())));
-        System.out.println("all - " + !(!(trueBlocks.contains(below.getType())) || (block.getType().isSolid()) || (above.getType().isSolid())));
         return !(!(trueBlocks.contains(below.getType())) || (block.getType().isSolid()) || (above.getType().isSolid()));
     }
 
@@ -85,14 +80,9 @@ public class NGBUtils extends JavaPlugin implements Listener {
                 block.getRelative(BlockFace.EAST),
                 block.getRelative(BlockFace.NORTH),
                 block.getRelative(BlockFace.SOUTH),
-                block.getRelative(BlockFace.EAST_NORTH_EAST),
-                block.getRelative(BlockFace.EAST_SOUTH_EAST),
-                block.getRelative(BlockFace.WEST_NORTH_WEST),
-                block.getRelative(BlockFace.WEST_SOUTH_WEST),
         };
         for (Block block1 : blocks){
             if (block1.getType() == Material.WATER){
-                System.out.println("Ура");
                 return true;
             }
         }
