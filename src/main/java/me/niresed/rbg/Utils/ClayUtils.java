@@ -1,7 +1,6 @@
-package me.niresed.ngb.Utils;
+package me.niresed.rbg.Utils;
 
-import me.niresed.ngb.Main.NGB;
-import org.bukkit.Bukkit;
+import me.niresed.rbg.Main.RBG;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -11,7 +10,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.ArrayList;
 
 public class ClayUtils {
-    private static final Plugin plugin = NGB.getPlugin(NGB.class);
+    private static final Plugin plugin = RBG.getPlugin(RBG.class);
     public static Location generateLocation(String zone, World world) {
         ArrayList<Integer> coordinate = (ArrayList<Integer>) plugin.getConfig().getIntegerList(zone);
         Location location = generateRandomLocation(world, coordinate);

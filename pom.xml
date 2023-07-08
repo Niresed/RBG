@@ -5,14 +5,14 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.niresed</groupId>
-    <artifactId>NGB</artifactId>
+    <artifactId>RBG</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>NGB</name>
+    <name>RBG</name>
 
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 

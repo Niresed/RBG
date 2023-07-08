@@ -1,11 +1,12 @@
-package me.niresed.ngb.Utils;
+package me.niresed.rbg.Utils;
 
-import me.niresed.ngb.Main.NGB;
+import me.niresed.rbg.Main.RBG;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
@@ -13,9 +14,11 @@ import java.util.HashSet;
 
 public class CaneUtils{
     // plugin
-    private static final Plugin plugin = NGB.getPlugin(NGB.class);
+    private static final Plugin plugin = RBG.getPlugin(RBG.class);
     // trueBlocks, blocks on which can spawn reeds
     private static final HashSet<Material> trueBlocks = new HashSet<>();
+
+    private static ConfigurationSection config;
 
     static {
         trueBlocks.add(Material.SAND);
@@ -24,8 +27,8 @@ public class CaneUtils{
     }
 
     public static Location generateLocation(String zone, World world){
-        ArrayList<Integer> coordinate = (ArrayList<Integer>) plugin.getConfig().getIntegerList(zone);
-        Location location = generateRandomLocation(world, coordinate);
+        config = plugin.getConfig().getConfigurationSection(zone);
+        Location location = generateRandomLocation(world);
         int countCane = 0;
         for (int i = 0; i < 30; i++){
             Block block = location.getBlock();
@@ -38,18 +41,17 @@ public class CaneUtils{
             boolean isLocationSafeCheck = isLocationSafe(location);
             boolean isLocationHasWaterInNearby = placeSugarCane(location);
             if (!(isLocationSafeCheck) || !(isLocationHasWaterInNearby)){
-                location = generateRandomLocation(world, coordinate);
+                location = generateRandomLocation(world);
             } else {
                 return location;
             }
         }
-        location.setY(0);
-        return location;
+        return null;
     }
 
-    private static Location generateRandomLocation(World world, ArrayList<Integer> coordinate){
-        int minX = coordinate.get(1), minZ = coordinate.get(2);
-        int maxX = coordinate.get(3), maxZ = coordinate.get(4);
+    private static Location generateRandomLocation(World world){
+        int minX = config.getInt("x1"), minZ = config.getInt("z1");
+        int maxX = config.getInt("x2"), maxZ = config.getInt("z2");
 
         int x = (int) Math.floor(Math.random() * (maxX - minX + 1) + minX);
         int y = 0;

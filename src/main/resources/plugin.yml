@@ -1,7 +1,7 @@
-name: NGB
+name: RBG
 version: '${project.version}'
-main: me.niresed.ngb.Main.NGB
+main: me.niresed.rbg.Main.RBG
 api-version: 1.16
 commands:
   BlockSwitch:
-    description: NGB on/off
+    description: RBG on/off

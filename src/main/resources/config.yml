@@ -1,8 +1,9 @@
-how many zones: 1
-# зоны обязательно должны идти по этому очереди. Zone_2, zone_3 и тд, и у всех должно быть 5 элементов
-zone_1:
-  - 0 # 0 - cane, 1 - clay
-  - 0 # from X
-  - 0 # from Z
-  - 100 # to X
-  - 100 # to Z
+zones:
+  - 'main'
+
+main:
+  type: 'cane'
+  x1: 0 # from X
+  z1: 0 # from Z
+  x2: 100 # to X
+  z2: 100 # to Z

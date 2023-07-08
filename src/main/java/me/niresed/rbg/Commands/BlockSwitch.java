@@ -1,6 +1,6 @@
-package me.niresed.ngb.Commands;
+package me.niresed.rbg.Commands;
 
-import me.niresed.ngb.Listener.GenerateEvent;
+import me.niresed.rbg.Utils.Generation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -12,13 +12,12 @@ import org.jetbrains.annotations.NotNull;
 public class BlockSwitch implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (sender instanceof Player){
-            Player player = (Player) sender;
-            if (player.hasPermission("ngb.gcane")){
+        if (sender instanceof Player player){
+            if (player.hasPermission("rbg.rbg")){
                 if (args[0].equals("on")){
-                    GenerateEvent.runTimer = true;
+                    Generation.runTimer = true;
                 } else if (args[0].equals("off")) {
-                    GenerateEvent.runTimer = false;
+                    Generation.runTimer = false;
                 } else {
                     player.sendMessage(ChatColor.RED + "Wrong command");
                 }
@@ -27,9 +26,9 @@ public class BlockSwitch implements CommandExecutor {
             }
         } else {
             if (args[0].equals("on")){
-                GenerateEvent.runTimer = true;
+                Generation.runTimer = true;
             } else if (args[0].equals("off")) {
-                GenerateEvent.runTimer = false;
+                Generation.runTimer = false;
             } else {
                 Bukkit.getLogger().info(ChatColor.RED + "Wrong command");
             }
