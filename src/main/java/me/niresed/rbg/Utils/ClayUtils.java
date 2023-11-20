@@ -5,43 +5,31 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 
 public class ClayUtils {
     private static final Plugin plugin = RBG.getPlugin(RBG.class);
+
     public static Location generateLocation(String zone, World world) {
         ArrayList<Integer> coordinate = (ArrayList<Integer>) plugin.getConfig().getIntegerList(zone);
-        Location location = generateRandomLocation(world, coordinate);
-        for (int i = 0; i < 30; i++){
+        ConfigurationSection config = plugin.getConfig().getConfigurationSection(zone);
+        Location location = Generation.generateRandomLocation(world, config);
+        for (int i = 0; i < 30; i++) {
             boolean isLocationSafeCheck = isLocationSafe(location);
-            if (!(isLocationSafeCheck)){
-                location = generateRandomLocation(world, coordinate);
+            if (!(isLocationSafeCheck)) {
+                location = Generation.generateRandomLocation(world, config);
             } else {
                 location = getHighestBlockYATWater(location);
-                if (location != null){
+                if (location != null) {
                     return location;
                 }
                 break;
             }
         }
         return null;
-    }
-
-    private static Location generateRandomLocation(World world, ArrayList<Integer> coordinate){
-        int minX = coordinate.get(1), minZ = coordinate.get(2);
-        int maxX = coordinate.get(3), maxZ = coordinate.get(4);
-
-        int x = (int) Math.floor(Math.random() * (maxX - minX + 1) + minX);
-        int y;
-        int z = (int) Math.floor(Math.random() * (maxZ - minZ + 1) + minZ);
-
-        Location location = new Location(world, x, 0, z);
-        y = location.getWorld().getHighestBlockYAt(location) + 1;
-        location.setY(y);
-
-        return location;
     }
 
     private static boolean isLocationSafe(Location location) {
@@ -56,14 +44,14 @@ public class ClayUtils {
         return !(!(below.getType() == Material.WATER) || (block.getType().isSolid()) || (above.getType().isSolid()) || (above2x.getType().isSolid()));
     }
 
-    private static Location getHighestBlockYATWater(Location location){
+    private static Location getHighestBlockYATWater(Location location) {
         Block block;
         Block above;
         Block below;
         int x;
         int y;
         int z;
-        for (int i = 0; i < 30; i++){
+        for (int i = 0; i < 30; i++) {
             x = (int) location.getX();
             y = (int) location.getY();
             z = (int) location.getZ();
@@ -72,7 +60,7 @@ public class ClayUtils {
             block = location.getWorld().getBlockAt(x, y, z);
             above = location.getWorld().getBlockAt(x, y + 1, z);
             location.setY(y - 1);
-            if (below.isSolid() && block.getType() == Material.WATER && !(above.getType() == Material.AIR)){
+            if (below.isSolid() && block.getType() == Material.WATER && !(above.getType() == Material.AIR)) {
                 return block.getLocation();
             }
         }

@@ -1,8 +1,13 @@
+world: 'world'
+
+cooldown: 1200 # ticks
+
+# name of all your zones
 zones:
   - 'main'
 
 main:
-  type: 'cane'
+  type: 'cane' # cane or clay
   x1: 0 # from X
   z1: 0 # from Z
   x2: 100 # to X

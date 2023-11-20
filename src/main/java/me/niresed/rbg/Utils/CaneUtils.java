@@ -1,24 +1,25 @@
 package me.niresed.rbg.Utils;
 
 import me.niresed.rbg.Main.RBG;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Random;
 
-public class CaneUtils{
-    // plugin
+public class CaneUtils {
     private static final Plugin plugin = RBG.getPlugin(RBG.class);
-    // trueBlocks, blocks on which can spawn reeds
     private static final HashSet<Material> trueBlocks = new HashSet<>();
-
-    private static ConfigurationSection config;
+    private static final ArrayList<Location> savedCoordinates = new ArrayList<>();
 
     static {
         trueBlocks.add(Material.SAND);
@@ -26,42 +27,51 @@ public class CaneUtils{
         trueBlocks.add(Material.DIRT);
     }
 
-    public static Location generateLocation(String zone, World world){
-        config = plugin.getConfig().getConfigurationSection(zone);
-        Location location = generateRandomLocation(world);
-        int countCane = 0;
-        for (int i = 0; i < 30; i++){
-            Block block = location.getBlock();
-            if (block.getType() == Material.SUGAR_CANE){
-                countCane += 1;
-            }
-            if (countCane >= 3) {
-                break;
-            }
+    public static Location generateLocation(String zone, World world) {
+        ConfigurationSection config = plugin.getConfig().getConfigurationSection(zone);
+        Location location = generateFromArray();
+        if (location != null) {
+            return location;
+        }
+        location = Generation.generateRandomLocation(world, config);
+        for (int i = 0; i < 300; i++) {
             boolean isLocationSafeCheck = isLocationSafe(location);
             boolean isLocationHasWaterInNearby = placeSugarCane(location);
-            if (!(isLocationSafeCheck) || !(isLocationHasWaterInNearby)){
-                location = generateRandomLocation(world);
-            } else {
+
+            if (!(isLocationSafeCheck) || !(isLocationHasWaterInNearby)) {
+                location = Generation.generateRandomLocation(world, config);
+                continue;
+            }
+
+            location.setY(location.getY() + 1);
+            if (location.getBlock().getType() != Material.AIR) {
+                continue;
+            }
+            savedCoordinates.add(location);
+            return location;
+        }
+        return null;
+    }
+
+    private static Location generateFromArray() {
+        for (Location location : savedCoordinates) {
+            Block block = location.getBlock();
+
+            if (block.getType() == Material.SUGAR_CANE) {
+                continue;
+            }
+
+            boolean isLocationSafeCheck = isLocationSafe(location);
+            boolean isLocationHasWaterInNearby = placeSugarCane(location);
+            if (isLocationSafeCheck || isLocationHasWaterInNearby) {
                 return location;
+            } else {
+                savedCoordinates.remove(location);
             }
         }
         return null;
     }
 
-    private static Location generateRandomLocation(World world){
-        int minX = config.getInt("x1"), minZ = config.getInt("z1");
-        int maxX = config.getInt("x2"), maxZ = config.getInt("z2");
-
-        int x = (int) Math.floor(Math.random() * (maxX - minX + 1) + minX);
-        int y = 0;
-        int z = (int) Math.floor(Math.random() * (maxZ - minZ + 1) + minZ);
-        Location location = new Location(world, x, y, z);
-        y = location.getWorld().getHighestBlockYAt(location) + 1;
-        location.setY(y);
-
-        return location;
-    }
     private static boolean isLocationSafe(Location location) {
         int x = location.getBlockX();
         int y = location.getBlockY();
@@ -78,15 +88,15 @@ public class CaneUtils{
 
     private static boolean placeSugarCane(Location location) {
         location.setY(location.getY() - 1);
-        Block block = location.getBlock();
+        Block mainBlock = location.getBlock();
         Block[] blocks = {
-                block.getRelative(BlockFace.WEST),
-                block.getRelative(BlockFace.EAST),
-                block.getRelative(BlockFace.NORTH),
-                block.getRelative(BlockFace.SOUTH),
+                mainBlock.getRelative(BlockFace.WEST),
+                mainBlock.getRelative(BlockFace.EAST),
+                mainBlock.getRelative(BlockFace.NORTH),
+                mainBlock.getRelative(BlockFace.SOUTH),
         };
-        for (Block block1 : blocks){
-            if (block1.getType() == Material.WATER){
+        for (Block block : blocks) {
+            if (block.getType() == Material.WATER) {
                 return true;
             }
 
