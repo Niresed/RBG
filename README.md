@@ -1,1 +1,1 @@
-# RBG 1.0 SNAPSHOT
+# RBG 1.0
